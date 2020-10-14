@@ -1,0 +1,22 @@
+{
+  "name": "discord-bot-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Swiggle45/Discord-Bot-JS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Swiggle45/Discord-Bot-JS/issues"
+  },
+  "homepage": "https://github.com/Swiggle45/Discord-Bot-JS#readme",
+  "dependencies": {
+    "discord.js": "^12.3.1"
+  }
+}
