@@ -2,9 +2,11 @@
   "name": "discord-bot-js",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "Bot.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node Bot.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +20,8 @@
   "homepage": "https://github.com/Swiggle45/Discord-Bot-JS#readme",
   "dependencies": {
     "discord.js": "^12.3.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.0"
   }
 }

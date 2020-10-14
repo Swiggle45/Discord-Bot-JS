@@ -1,8 +1,7 @@
 import { getToken } from "./Token.js";
+import Discord from "discord.js";
 
 const token = getToken();
-
-const Discord = require("discord.js");
 const client = new Discord.Client();
 
 client.once('ready', () => {
