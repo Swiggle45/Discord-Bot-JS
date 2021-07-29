@@ -19,9 +19,9 @@
   },
   "homepage": "https://github.com/Swiggle45/Discord-Bot-JS#readme",
   "dependencies": {
-    "discord.js": "^12.3.1"
+    "discord.js": "^12.5.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.0"
+    "@babel/core": "^7.14.8"
   }
 }
