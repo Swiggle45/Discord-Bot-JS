@@ -1,19 +1,28 @@
-import { getToken } from "./Token.js";
-import Discord from "discord.js";
+const fs = require('fs');
+const { token } = require('./config.json');
+const { Client, Collection, Intents } = require('discord.js');
 
-const token = getToken();
-const client = new Discord.Client();
+const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+
+client.commands = new Collection();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	// Set a new item in the Collection
+	// With the key as the command name and the value as the exported module
+	client.commands.set(command.data.name, command);
+}
 
 client.once('ready', () => {
     console.log('Ready!');
 })
-client.login(token);
 
 /* ------------------------------------------------------------------*/
 
 function roller(message) {
-    const errorMessage = "syntax: \'roll dn\' where n is the highest number on the dice";
-    const start = "You rolled a ";
+    const errorMessage = "syntax: \'roll dn\' where n is the highest number on the dice\nExample: roll d20";
+    const start = message.author.toString() + " You rolled: ";
     let m = message.content;
     if (RegExp("roll d").test(m) == false) {
         return errorMessage;
@@ -30,11 +39,14 @@ function roller(message) {
     return start + answer;
 }
 
+
 let staticReply = new Map();
 staticReply['ping'] = 'Pong!';
 staticReply['hi'] = 'Hi!';
 staticReply['hello'] = 'Hello!';
-console.log(staticReply);
+staticReply['lefty help'] = '';
+staticReply['test'] = client;
+//console.log(staticReply);
 
 let dynamicReply = new Map();
 dynamicReply['roll'] = roller;
@@ -42,10 +54,26 @@ dynamicReply['roll'] = roller;
 let searchWords = new Map();
 
 
+client.on('interactionCreate', async (interaction) => {
+	if (!interaction.isCommand()) return;
+
+    const command = client.commands.get(interaction.commandName);
+
+	if (!command) return;
+
+	try {
+		await command.execute(interaction);
+	} catch (error) {
+		console.error(error);
+		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+	}
+
+});
+
 
 client.on('message', message => {
     if (message.author.bot) return;
-    console.log(message.content);
+    console.log(message.author.username + ': ' + message.content);
     for (const [key, value] of Object.entries(staticReply)) {
         if (message.content.startsWith(key)) {
             message.channel.send(value);
@@ -57,4 +85,6 @@ client.on('message', message => {
         }
     }
 });
+
+client.login(token);
 

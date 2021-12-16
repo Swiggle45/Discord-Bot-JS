@@ -1,0 +1,35 @@
+//setup
+import { getToken } from "./Token.js";
+import Discord from "discord.js";
+
+const token = getToken();
+const client = new Discord.Client();
+
+client.once('ready', () => {
+    console.log('Ready!');
+})
+client.login(token);
+
+
+
+//do something when a message is sent to a channel
+client.on('message', message => {
+    //use methods on message to get stuff about it
+
+    //get mention
+    message.author.toString()
+
+    //check if message author is a bot
+    if (message.author.bot) return;
+
+    //send new message to the channel the message was sent to
+    message.channel.send()
+
+    //iterate over array/map
+    for (const [key, value] of Object.entries(staticReply)) {
+        if (message.content.startsWith(key)) {
+            message.channel.send(value);
+        }
+    }
+    
+});
